@@ -352,9 +352,21 @@ impl PartialEq<str> for IString {
     }
 }
 
+impl PartialEq<&str> for IString {
+    fn eq(&self, other: &&str) -> bool {
+        self.as_str() == *other
+    }
+}
+
 impl PartialEq<IString> for str {
     fn eq(&self, other: &IString) -> bool {
         self == other.as_str()
+    }
+}
+
+impl PartialEq<IString> for &str {
+    fn eq(&self, other: &IString) -> bool {
+        *self == other.as_str()
     }
 }
 
@@ -400,6 +412,12 @@ impl Hash for IString {
 impl Debug for IString {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         Debug::fmt(self.as_str(), f)
+    }
+}
+
+impl fmt::Display for IString {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt::Display::fmt(self.as_str(), f)
     }
 }
 
